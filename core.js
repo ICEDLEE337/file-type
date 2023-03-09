@@ -1,5 +1,4 @@
 import {Buffer} from 'node:buffer';
-import * as Token from 'token-types';
 import {
 	stringToBytes,
 	tarHeaderChecksumMatches,
@@ -75,6 +74,7 @@ class FileTypeParser {
 
 	async parse(tokenizer) {
 		this.buffer = Buffer.alloc(minimumBytes);
+		const Token = await import('token-types');
 
 		// Keep reading until EOF if the file size is unknown.
 		if (tokenizer.fileInfo.size === undefined) {
@@ -670,6 +670,7 @@ class FileTypeParser {
 
 		// https://github.com/threatstack/libmagic/blob/master/magic/Magdir/matroska
 		if (this.check([0x1A, 0x45, 0xDF, 0xA3])) { // Root element: EBML
+			const Token = await import('token-types');
 			async function readField() {
 				const msb = await tokenizer.peekNumber(Token.UINT8);
 				let mask = 0x80;
@@ -698,6 +699,7 @@ class FileTypeParser {
 			}
 
 			async function readChildren(children) {
+				const Token = await import('token-types');
 				while (children > 0) {
 					const element = await readElement();
 					if (element.id === 0x42_82) {
@@ -1472,6 +1474,7 @@ class FileTypeParser {
 	}
 
 	async readTiffTag(bigEndian) {
+		const Token = await import('token-types');
 		const tagId = await this.tokenizer.readToken(bigEndian ? Token.UINT16_BE : Token.UINT16_LE);
 		this.tokenizer.ignore(10);
 		switch (tagId) {
@@ -1490,6 +1493,7 @@ class FileTypeParser {
 	}
 
 	async readTiffIFD(bigEndian) {
+		const Token = await import('token-types');
 		const numberOfTags = await this.tokenizer.readToken(bigEndian ? Token.UINT16_BE : Token.UINT16_LE);
 		for (let n = 0; n < numberOfTags; ++n) {
 			const fileType = await this.readTiffTag(bigEndian);
@@ -1500,6 +1504,7 @@ class FileTypeParser {
 	}
 
 	async readTiffHeader(bigEndian) {
+		const Token = await import('token-types');
 		const version = (bigEndian ? Token.UINT16_BE : Token.UINT16_LE).get(this.buffer, 2);
 		const ifdOffset = (bigEndian ? Token.UINT32_BE : Token.UINT32_LE).get(this.buffer, 4);
 
