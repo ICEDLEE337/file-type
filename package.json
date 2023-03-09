@@ -1,6 +1,6 @@
 {
 	"name": "file-type-node",
-	"version": "18.2.7",
+	"version": "18.2.8",
 	"description": "Detect the file type of a Buffer/Uint8Array/ArrayBuffer",
 	"license": "MIT",
 	"repository": "icedlee337/file-type",
