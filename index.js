@@ -1,4 +1,4 @@
-import * as strtok3 from 'strtok3';
+const strtok3 = await import('strtok3/core'); // eslint-disable-line n/file-extension-in-import
 import {fileTypeFromTokenizer} from './core.js';
 
 export async function fileTypeFromFile(path) {

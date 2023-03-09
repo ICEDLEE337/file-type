@@ -1,12 +1,12 @@
 import {Buffer} from 'node:buffer';
 import * as Token from 'token-types';
-import * as strtok3 from 'strtok3/core'; // eslint-disable-line n/file-extension-in-import
 import {
 	stringToBytes,
 	tarHeaderChecksumMatches,
 	uint32SyncSafeToken,
 } from './util.js';
 import {extensions, mimeTypes} from './supported.js';
+const strtok3 = await import('strtok3/core'); // eslint-disable-line n/file-extension-in-import
 
 const minimumBytes = 4100; // A fair amount of file-types are detectable within this range.
 

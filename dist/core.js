@@ -73,9 +73,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.supportedMimeTypes = exports.supportedExtensions = exports.fileTypeStream = exports.fileTypeFromTokenizer = exports.fileTypeFromBuffer = exports.fileTypeFromStream = void 0;
 var node_buffer_1 = require("node:buffer");
 var Token = __importStar(require("token-types"));
-var strtok3 = __importStar(require("strtok3/core")); // eslint-disable-line n/file-extension-in-import
 var util_js_1 = require("./util.js");
 var supported_js_1 = require("./supported.js");
+var strtok3 = await import('strtok3/core'); // eslint-disable-line n/file-extension-in-import
 var minimumBytes = 4100; // A fair amount of file-types are detectable within this range.
 function fileTypeFromStream(stream) {
     return __awaiter(this, void 0, void 0, function () {
@@ -1604,7 +1604,7 @@ function fileTypeStream(readableStream, _a) {
         var _this = this;
         return __generator(this, function (_d) {
             switch (_d.label) {
-                case 0: return [4 /*yield*/, Promise.resolve().then(function () { return __importStar(require('node:stream')); })];
+                case 0: return [4 /*yield*/, import('node:stream')];
                 case 1:
                     stream = (_d.sent()).default;
                     return [2 /*return*/, new Promise(function (resolve, reject) {
