@@ -1,4 +1,7 @@
-export const extensions = [
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mimeTypes = exports.extensions = void 0;
+exports.extensions = [
     'jpg',
     'png',
     'apng',
@@ -143,7 +146,7 @@ export const extensions = [
     'dwg',
     'parquet',
 ];
-export const mimeTypes = [
+exports.mimeTypes = [
     'image/jpeg',
     'image/png',
     'image/gif',
