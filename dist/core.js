@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supportedMimeTypes = exports.supportedExtensions = exports.fileTypeStream = exports.fileTypeFromTokenizer = exports.fileTypeFromBuffer = exports.fileTypeFromStream = void 0;
 const node_buffer_1 = require("node:buffer");
-const Token = __importStar(require("token-types"));
 const util_js_1 = require("./util.js");
 const supported_js_1 = require("./supported.js");
 const minimumBytes = 4100; // A fair amount of file-types are detectable within this range.
@@ -90,6 +89,7 @@ class FileTypeParser {
     }
     async parse(tokenizer) {
         this.buffer = node_buffer_1.Buffer.alloc(minimumBytes);
+        const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
         // Keep reading until EOF if the file size is unknown.
         if (tokenizer.fileInfo.size === undefined) {
             tokenizer.fileInfo.size = Number.MAX_SAFE_INTEGER;
@@ -597,6 +597,7 @@ class FileTypeParser {
         }
         // https://github.com/threatstack/libmagic/blob/master/magic/Magdir/matroska
         if (this.check([0x1A, 0x45, 0xDF, 0xA3])) { // Root element: EBML
+            const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
             async function readField() {
                 const msb = await tokenizer.peekNumber(Token.UINT8);
                 let mask = 0x80;
@@ -621,6 +622,7 @@ class FileTypeParser {
                 };
             }
             async function readChildren(children) {
+                const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
                 while (children > 0) {
                     const element = await readElement();
                     if (element.id === 17026) {
@@ -1275,6 +1277,7 @@ class FileTypeParser {
         }
     }
     async readTiffTag(bigEndian) {
+        const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
         const tagId = await this.tokenizer.readToken(bigEndian ? Token.UINT16_BE : Token.UINT16_LE);
         this.tokenizer.ignore(10);
         switch (tagId) {
@@ -1292,6 +1295,7 @@ class FileTypeParser {
         }
     }
     async readTiffIFD(bigEndian) {
+        const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
         const numberOfTags = await this.tokenizer.readToken(bigEndian ? Token.UINT16_BE : Token.UINT16_LE);
         for (let n = 0; n < numberOfTags; ++n) {
             const fileType = await this.readTiffTag(bigEndian);
@@ -1301,6 +1305,7 @@ class FileTypeParser {
         }
     }
     async readTiffHeader(bigEndian) {
+        const Token = await Promise.resolve().then(() => __importStar(require('token-types')));
         const version = (bigEndian ? Token.UINT16_BE : Token.UINT16_LE).get(this.buffer, 2);
         const ifdOffset = (bigEndian ? Token.UINT32_BE : Token.UINT32_LE).get(this.buffer, 4);
         if (version === 42) {
