@@ -6,11 +6,11 @@ import {
 	uint32SyncSafeToken,
 } from './util.js';
 import {extensions, mimeTypes} from './supported.js';
-const strtok3 = await import('strtok3/core'); // eslint-disable-line n/file-extension-in-import
 
 const minimumBytes = 4100; // A fair amount of file-types are detectable within this range.
 
 export async function fileTypeFromStream(stream) {
+	const strtok3 = await import('strtok3/core'); // eslint-disable-line n/file-extension-in-import
 	const tokenizer = await strtok3.fromStream(stream);
 	try {
 		return await fileTypeFromTokenizer(tokenizer);
